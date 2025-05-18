@@ -10,8 +10,17 @@ bag_path = '/home/chanwoo/seperator(05.18)/seperator_tanger'  # ros2 bag 기록�
 output_file = 'output.mp4'
 topic_name = '/camera/color/image_raw'  # 저장된 이미지 토픽 이름
 
+# bag_path 내에서 .db3 파일 자동 탐색
+db_files = [f for f in os.listdir(bag_path) if f.endswith('.db3')]
+if not db_files:
+    print(f"No .db3 file found in: {bag_path}")
+    exit(1)
+
+db_path = os.path.join(bag_path, db_files[0])  # 첫 번째 .db3 파일 사용
+print(f"Using bag file: {db_path}")
+
 # SQLite DB 접근
-conn = sqlite3.connect(os.path.join(bag_path, 'seperator_1_0.db3'))
+conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
 # 토픽 ID 가져오기
