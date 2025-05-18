@@ -7,7 +7,7 @@ from rclpy.serialization import deserialize_message
 from rosidl_runtime_py.utilities import get_message
 
 # 1. .bag 폴더 경로 지정
-bag_path = '/home/chanwoo/seperator(05.18)/seperator_tanger'
+bag_path = '/home/chanwoo/seperator(05.18)/seperator_semi_tanger'
 topic_name = '/camera/color/image_raw'  # 원하는 이미지 토픽
 
 # 2. .db3 파일 자동 탐색
@@ -22,7 +22,13 @@ print(f"[🔍] Using bag file: {db_path}")
 
 # 3. .db3 이름 기반 mp4 출력 파일 이름 생성
 base_name = os.path.splitext(db_filename)[0]
-output_file = os.path.join(bag_path, f'{base_name}.mp4')
+
+# output 폴더 경로 생성
+output_dir = os.path.join(bag_path, 'output')
+os.makedirs(output_dir, exist_ok=True)
+
+# output.mp4 경로 지정
+output_file = os.path.join(output_dir, f'{base_name}.mp4')
 
 # 4. SQLite DB 연결
 conn = sqlite3.connect(db_path)
