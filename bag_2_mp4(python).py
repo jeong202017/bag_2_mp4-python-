@@ -8,6 +8,15 @@ from rosidl_runtime_py.utilities import get_message
 
 # 1. .bag 폴더 경로 지정
 bag_path = '/home/chanwoo/seperator(05.18)/seperator_semi_tanger'
+
+# 경로 후보
+# seperator_ripe_godoo
+# seperator_ripe_no
+# seperator_ripe_yeolgwa
+# seperator_semi_no
+# seperator_semi_tanger
+# seperator_tanger
+
 topic_name = '/camera/color/image_raw'  # 원하는 이미지 토픽
 
 # 2. .db3 파일 자동 탐색
@@ -23,11 +32,12 @@ print(f"[🔍] Using bag file: {db_path}")
 # 3. .db3 이름 기반 mp4 출력 파일 이름 생성
 base_name = os.path.splitext(db_filename)[0]
 
-# output 폴더 경로 생성
-output_dir = os.path.join(bag_path, 'output')
+# 🔄 현재 실행 디렉토리 기준으로 output 폴더 생성
+current_dir = os.getcwd()
+output_dir = os.path.join(current_dir, 'output')
 os.makedirs(output_dir, exist_ok=True)
 
-# output.mp4 경로 지정
+# 🔄 output.mp4 경로 생성
 output_file = os.path.join(output_dir, f'{base_name}.mp4')
 
 # 4. SQLite DB 연결
